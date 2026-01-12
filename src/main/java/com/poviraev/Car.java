@@ -1,9 +1,5 @@
 package com.poviraev;
 
-import org.springframework.stereotype.Component;
-
-//Будущий бин(singleton)
-@Component(value = "AdamAnnotation") //Component - потенциальный бин
 public class Car {
     private int id;
     private String model;
