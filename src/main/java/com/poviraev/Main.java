@@ -1,19 +1,19 @@
 package com.poviraev;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan("com.poviraev") //вычитай все классы по этому пути
 public class Main {
     public static void main(String[] args) {
         //Создание Spring контейнера(ApplicationContext)
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-settings.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        //Достаем из контекста Бин Car с названием Adam
-        Car car = (Car) context.getBean("Adam");
-        Car car1 = (Car) context.getBean("Adam");
+        //Достаем из контекста Бин Car с названием AdamAnnotation
+        Car car = (Car) context.getBean("AdamAnnotation");
 
         System.out.println(car.hashCode());
-        System.out.println(car1.hashCode());
 
         System.out.println(car.getId());
         System.out.println(car.getModel());
