@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Scope;
 
 @ComponentScan("com.poviraev") //вычитай все классы по этому пути
 public class Main {
@@ -13,6 +14,8 @@ public class Main {
 
         //Достаем из контекста Бин Car с названием AdamAnnotation
         Car car = (Car) context.getBean("getCar");
+
+        System.out.println(car.hashCode());
 
         System.out.println(car.getId());
         System.out.println(car.getModel());
