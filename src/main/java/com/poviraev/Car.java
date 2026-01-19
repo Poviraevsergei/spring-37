@@ -1,5 +1,6 @@
 package com.poviraev;
 
+import com.poviraev.annotation.TimerAop;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+import java.util.Objects;
+import java.util.Random;
 
-//DI:
-// 1. Поле(Лучше так не делать)
-// 2. Метод(Сеттер)
-// 3. Конструктор(зы бест)
 @Scope("singleton")
 @Component
 public class Car {
@@ -21,9 +19,6 @@ public class Car {
     private String color;
     private CarDriver carDriver;
 
-    private String url;
-
-    //@Autowired //Начиная с версии 4.3 можно не ставить если у класса только 1 конструктор
     public Car(CarDriver carDriver) {
         this.carDriver = carDriver;
     }
@@ -60,7 +55,25 @@ public class Car {
         return color;
     }
 
-    @PostConstruct //Метод инициализации
+    @TimerAop
+    public Boolean start(){
+        System.out.println("Car started");
+        try {
+            Thread.sleep(new Random().nextLong(1,100));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        stop(); //Проблема что в stop AOP не будет вызван!!!
+        return true;
+    }
+
+    @TimerAop
+    public Boolean stop(){
+        System.out.println("Car stopped");
+        return true;
+    }
+
+    @PostConstruct
     public void initSpring(){
         System.out.println("Spring Initialized: Car");
     }
